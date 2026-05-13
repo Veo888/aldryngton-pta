@@ -659,6 +659,7 @@
       <a href="#" onclick="showPage('events')" id="nav-events">Events</a>
       <a href="#" onclick="showPage('documents')" id="nav-documents">Documents</a>
       <a href="#" onclick="showPage('uniform')" id="nav-uniform">Uniform</a>
+      <a href="#" onclick="showPage('zeffy')" id="nav-zeffy" style="background:rgba(255,255,255,0.18); border:1.5px solid rgba(255,255,255,0.4)">💳 Tickets & Donate</a>
       <a href="#" onclick="showPage('contact')" id="nav-contact">Contact</a>
     </nav>
     <button class="nav-hamburger" onclick="openMobileNav()">☰</button>
@@ -677,6 +678,7 @@
   <a href="#" onclick="showPage('events'); closeMobileNav()">🎉 Events & Fundraisers</a>
   <a href="#" onclick="showPage('documents'); closeMobileNav()">📄 Documents & Forms</a>
   <a href="#" onclick="showPage('uniform'); closeMobileNav()">👕 Second-Hand Uniform</a>
+  <a href="#" onclick="showPage('zeffy'); closeMobileNav()" style="background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); border-radius:10px">💳 Tickets & Donate (Zeffy)</a>
   <a href="#" onclick="showPage('contact'); closeMobileNav()">✉️ Contact Us</a>
 </nav>
 
@@ -738,6 +740,12 @@
         <p>Buy and sell good-quality pre-loved uniform. Great for families, great for the planet.</p>
         <span class="card-link">Find out more →</span>
       </div>
+      <div class="card" onclick="showPage('zeffy')" style="border-color:var(--gold); background:linear-gradient(135deg,#fffdf0,#fff)">
+        <span class="card-icon">💳</span>
+        <h3>Tickets, Shops & Donate</h3>
+        <p>Buy event tickets, join Pool Club, browse the pre-loved uniform shop or donate to the Save our Swimming Pool campaign — all via Zeffy.</p>
+        <span class="card-link" style="color:var(--gold)">Go to Zeffy →</span>
+      </div>
       <div class="card" onclick="showPage('contact')">
         <span class="card-icon">✉️</span>
         <h3>Contact Us</h3>
@@ -750,6 +758,16 @@
       <h2>🙌 We Really Need Your Support!</h2>
       <p>As a parent of a child at Aldryngton Primary School, <strong>you are automatically a member of the PTA</strong>. You can attend meetings, vote on proposals and suggest ideas for spending or raising funds.</p>
       <p style="margin-top:8px;">Even if you can't commit to a regular role, any support you can give — attending events, volunteering for an afternoon, or simply spreading the word — makes a huge difference to our school community.</p>
+    </div>
+
+    <!-- SAVE OUR POOL BANNER -->
+    <div style="background:linear-gradient(135deg,#1a5aa0,#0d3a6a); color:white; border-radius:var(--radius); padding:28px 28px; display:flex; align-items:center; gap:20px; flex-wrap:wrap; margin-top:8px;">
+      <div style="font-size:3rem; flex-shrink:0">🏊</div>
+      <div style="flex:1; min-width:200px">
+        <div style="font-family:'Nunito',sans-serif; font-weight:900; font-size:1.2rem; margin-bottom:6px">Save Our Swimming Pool</div>
+        <div style="opacity:0.88; font-size:0.9rem; margin-bottom:14px">Our on-site pool gives every child the chance to learn to swim. Help us reach our £10,000 goal to keep it open for future generations.</div>
+        <a href="https://www.zeffy.com/en-GB/donation-form/save-our-swimming-pool" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:var(--gold); color:#2a1a00; padding:10px 20px; border-radius:10px; font-family:'Nunito',sans-serif; font-weight:800; font-size:0.9rem; text-decoration:none;">❤️ Donate Now via Zeffy</a>
+      </div>
     </div>
   </div>
 </div>
@@ -1215,6 +1233,107 @@
         </tbody>
       </table>
     </div>
+  </div>
+</div>
+
+<!-- ═══════════════ ZEFFY PAGE ═══════════════ -->
+<div class="page" id="page-zeffy">
+  <div class="main">
+    <h2 class="section-title">Tickets, Shops & Donate</h2>
+    <p class="section-subtitle">Everything is handled through our Zeffy page — 100% free for the PTA, with no platform fees taken from your payments.</p>
+
+    <!-- Zeffy intro box -->
+    <div style="background:linear-gradient(135deg,#1a1a2e,#16213e); color:white; border-radius:var(--radius); padding:24px 28px; margin-bottom:28px; display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap;">
+      <div style="font-size:2.5rem; flex-shrink:0">💚</div>
+      <div style="flex:1; min-width:200px;">
+        <div style="font-family:'Nunito',sans-serif; font-weight:900; font-size:1.1rem; margin-bottom:6px;">Why Zeffy?</div>
+        <div style="font-size:0.9rem; opacity:0.88; line-height:1.6;">Zeffy is a fundraising platform built for charities and PTAs. Unlike other platforms, <strong>Zeffy charges the PTA absolutely nothing</strong> — 100% of every payment you make goes directly to us. Donors can optionally leave a small tip to Zeffy if they wish.</div>
+        <a href="https://www.zeffy.com/en-GB/organizations/aldryngton-county-primary-school-parent-teacher-association" target="_blank" style="display:inline-flex; align-items:center; gap:8px; margin-top:14px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); color:white; padding:8px 18px; border-radius:8px; font-family:'Nunito',sans-serif; font-weight:700; font-size:0.85rem; text-decoration:none;">🔗 View our full Zeffy page →</a>
+      </div>
+    </div>
+
+    <!-- SAVE OUR POOL -->
+    <h3 style="font-family:'Nunito',sans-serif; font-weight:900; font-size:1.2rem; margin-bottom:14px; color:var(--text)">❤️ Donation Campaign</h3>
+    <div style="background:linear-gradient(135deg,#1a5aa0,#0d3a6a); color:white; border-radius:var(--radius); padding:24px 28px; margin-bottom:28px; display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap;">
+      <div style="font-size:2.8rem; flex-shrink:0">🏊</div>
+      <div style="flex:1; min-width:200px;">
+        <div style="font-family:'Nunito',sans-serif; font-weight:900; font-size:1.15rem; margin-bottom:6px;">Save Our Swimming Pool</div>
+        <div style="font-size:0.9rem; opacity:0.88; margin-bottom:6px; line-height:1.6;">Our on-site pool gives every Aldryngton child the chance to learn to swim in a safe, familiar environment during the school day. For many children, this is where it all begins.</div>
+        <div style="font-size:0.9rem; opacity:0.88; margin-bottom:14px; line-height:1.6;">Without the pool, children would travel to leisure centres, missing lessons and creating extra costs and stress for families. Help us reach our <strong>£10,000 goal</strong> to keep it open for future generations.</div>
+        <a href="https://www.zeffy.com/en-GB/donation-form/save-our-swimming-pool" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:var(--gold); color:#2a1a00; padding:11px 22px; border-radius:10px; font-family:'Nunito',sans-serif; font-weight:800; font-size:0.95rem; text-decoration:none;">❤️ Donate to Save Our Pool</a>
+      </div>
+    </div>
+
+    <!-- UPCOMING EVENTS / TICKETS -->
+    <h3 style="font-family:'Nunito',sans-serif; font-weight:900; font-size:1.2rem; margin-bottom:14px; color:var(--text)">🎟️ Events — Buy Tickets</h3>
+    <div class="cards" style="margin-bottom:32px;">
+
+      <div class="card">
+        <span class="card-icon">🕺</span>
+        <h3>Disco – May 2026</h3>
+        <p>Pre-book your tickets for the May disco. Held at Earley, Reading RG6 7HR. Book online via Zeffy to guarantee your place.</p>
+        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+          <span class="pill gold">9–14 May 2026</span>
+        </div>
+        <a href="https://www.zeffy.com/en-GB/ticketing/disco-may-2026-pre-booking" target="_blank" class="btn btn-red" style="margin-top:14px; font-size:0.85rem; padding:10px 18px;">🎟️ Get Tickets</a>
+      </div>
+
+      <div class="card">
+        <span class="card-icon">🏊🚴🏃</span>
+        <h3>Try-A-Tri 2026</h3>
+        <p>A fun, low-pressure mini-triathlon for Aldryngton pupils from Foundation to Year 6. Teams of three take on swim, cycle and run. Open to all abilities — it's about taking part!</p>
+        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+          <span class="pill green">6 June 2026</span>
+        </div>
+        <a href="https://www.zeffy.com/en-GB/ticketing/try-a-tri" target="_blank" class="btn btn-red" style="margin-top:14px; font-size:0.85rem; padding:10px 18px;">🎟️ Sign Up</a>
+      </div>
+
+    </div>
+
+    <!-- MEMBERSHIPS -->
+    <h3 style="font-family:'Nunito',sans-serif; font-weight:900; font-size:1.2rem; margin-bottom:14px; color:var(--text)">🏊 Memberships</h3>
+    <div class="info-box" style="margin-bottom:28px;">
+      <h2>Pool Club Membership 2026</h2>
+      <p style="margin-bottom:10px;">Join other school families for relaxed after-school and summer holiday swimming in the school's heated outdoor pool. Members share one hour of supervisor duties and book via a self-booking rota.</p>
+      <ul style="padding-left:20px; margin-bottom:14px;">
+        <li style="margin-bottom:6px; font-size:0.9rem; color:var(--text-muted);">Membership fees go directly towards running the pool</li>
+        <li style="margin-bottom:6px; font-size:0.9rem; color:var(--text-muted);">Includes a first aid evening (CPR, defibrillator training)</li>
+        <li style="margin-bottom:6px; font-size:0.9rem; color:var(--text-muted);">Children can attend with grandparents, childminders or other pool club parents</li>
+        <li style="margin-bottom:6px; font-size:0.9rem; color:var(--text-muted);">Later in summer, members can bring up to 2 non-Aldryngton guests for a small fee</li>
+      </ul>
+      <a href="https://www.zeffy.com/en-GB/ticketing/aldryngton-pta-2026-pool-club-membership" target="_blank" class="btn btn-red">🏊 Join Pool Club</a>
+    </div>
+
+    <!-- SHOPS -->
+    <h3 style="font-family:'Nunito',sans-serif; font-weight:900; font-size:1.2rem; margin-bottom:14px; color:var(--text)">🛍️ Online Shops</h3>
+    <div class="cards" style="margin-bottom:8px;">
+
+      <div class="card">
+        <span class="card-icon">👕</span>
+        <h3>Pre-Loved Uniform Shop</h3>
+        <p>Browse and buy good-quality second-hand Aldryngton uniform online. Every purchase supports the PTA directly. Great value, great for the environment.</p>
+        <a href="https://www.zeffy.com/en-GB/ticketing/aldryngton-pre-loved-shop" target="_blank" class="btn btn-outline" style="margin-top:14px; font-size:0.85rem; padding:10px 18px;">🛍️ Browse Uniform Shop</a>
+      </div>
+
+      <div class="card">
+        <span class="card-icon">📚</span>
+        <h3>Book Wish List</h3>
+        <p>Aldryngton recently refreshed its school libraries and is looking for new books. Every purchase goes directly to the school and the reading experience of all our children.</p>
+        <a href="https://www.zeffy.com/en-GB/ticketing/aldryngton-primary-school-book-wish-list" target="_blank" class="btn btn-outline" style="margin-top:14px; font-size:0.85rem; padding:10px 18px;">📚 View Book Wish List</a>
+      </div>
+
+    </div>
+
+    <!-- NEWSLETTER -->
+    <div style="background:var(--grey-light); border:1.5px solid var(--grey); border-radius:var(--radius); padding:22px 24px; margin-top:12px; display:flex; gap:16px; align-items:center; flex-wrap:wrap;">
+      <div style="font-size:2rem; flex-shrink:0;">📬</div>
+      <div style="flex:1; min-width:180px;">
+        <div style="font-family:'Nunito',sans-serif; font-weight:800; font-size:1rem; margin-bottom:4px;">Stay in the loop</div>
+        <div style="font-size:0.88rem; color:var(--text-muted);">Subscribe to the PTA newsletter on Zeffy to be notified about new events, ticket releases and fundraising news.</div>
+      </div>
+      <a href="https://www.zeffy.com/en-GB/newsletter-form/subscribe-to-get-notified-about-new-events-3596" target="_blank" class="btn btn-gold" style="font-size:0.88rem; padding:10px 18px; flex-shrink:0;">📬 Subscribe</a>
+    </div>
+
   </div>
 </div>
 
