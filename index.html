@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aldryngton PTA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #cc1f1f;
+    --red-dark: #a01818;
+    --red-light: #f9e8e8;
+    --gold: #d4a017;
+    --gold-light: #fdf3d0;
+    --green: #2d7a2d;
+    --white: #ffffff;
+    --off-white: #fafaf8;
+    --grey-light: #f4f4f2;
+    --grey: #e0e0dc;
+    --text: #1a1a1a;
+    --text-muted: #666660;
+    --radius: 12px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    --shadow-hover: 0 6px 24px rgba(0,0,0,0.14);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--red);
+    color: var(--white);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+  }
+
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--white);
+  }
+
+  .header-logo img {
+    height: 52px;
+    width: auto;
+    filter: drop-shadow(0 1px 4px rgba(0,0,0,0.3));
+  }
+
+  .header-title {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 1.5rem;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+  }
+
+  .header-title span {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0.85;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  nav a {
+    color: var(--white);
+    text-decoration: none;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background 0.18s;
+    white-space: nowrap;
+  }
+
+  nav a:hover, nav a.active {
+    background: rgba(255,255,255,0.18);
+  }
+
+  .nav-hamburger {
+    display: none;
+    background: none;
+    border: 2px solid rgba(255,255,255,0.5);
+    border-radius: 8px;
+    color: var(--white);
+    padding: 6px 10px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  /* Mobile nav drawer */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: 280px;
+    background: var(--red-dark);
+    z-index: 2000;
+    padding: 20px;
+    flex-direction: column;
+    gap: 4px;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.25s ease;
+  }
+
+  .mobile-nav.open {
+    transform: translateX(0);
+  }
+
+  .mobile-nav-close {
+    align-self: flex-end;
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: white;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+  }
+
+  .mobile-nav a {
+    color: white;
+    text-decoration: none;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 12px 16px;
+    border-radius: 10px;
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .mobile-nav a:hover { background: rgba(255,255,255,0.15); }
+
+  .nav-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 1999;
+  }
+
+  .nav-overlay.open { display: block; }
+
+  /* ── PAGE SECTIONS (SPA-style) ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+    color: white;
+    padding: 60px 20px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -40px;
+    width: 250px; height: 250px;
+    border-radius: 50%;
+    background: rgba(212,160,23,0.12);
+  }
+
+  .hero-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+
+  .hero img {
+    height: 110px;
+    width: auto;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+  }
+
+  .hero h1 {
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 900;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    max-width: 500px;
+    margin: 0 auto 28px;
+  }
+
+  .hero-badges {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hero-badge {
+    background: rgba(255,255,255,0.18);
+    border: 1.5px solid rgba(255,255,255,0.3);
+    border-radius: 50px;
+    padding: 6px 18px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ── NEXT MEETING BANNER ── */
+  .next-meeting {
+    background: var(--gold);
+    color: #2a1a00;
+    padding: 14px 20px;
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+  }
+
+  .next-meeting a { color: #2a1a00; text-decoration: underline; cursor: pointer; }
+
+  /* ── MAIN CONTENT WRAPPER ── */
+  .main { max-width: 1100px; margin: 0 auto; padding: 40px 20px 60px; }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--red);
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+
+  .section-subtitle {
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    font-size: 1rem;
+  }
+
+  /* ── CARDS GRID ── */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px;
+    transition: transform 0.18s, box-shadow 0.18s;
+    border: 1.5px solid var(--grey);
+    cursor: pointer;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--red);
+  }
+
+  .card-icon {
+    font-size: 2.2rem;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .card h3 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .card p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .card-link {
+    display: inline-block;
+    margin-top: 14px;
+    color: var(--red);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    text-decoration: none;
+  }
+
+  /* ── INFO BOX ── */
+  .info-box {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1.5px solid var(--grey);
+    padding: 28px 32px;
+    margin-bottom: 24px;
+  }
+
+  .info-box h2 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--red);
+    margin-bottom: 12px;
+  }
+
+  .info-box p, .info-box li {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+  }
+
+  .info-box ul {
+    padding-left: 20px;
+  }
+
+  .info-box li { margin-bottom: 6px; }
+
+  /* ── PILL TAGS ── */
+  .pill {
+    display: inline-block;
+    background: var(--red-light);
+    color: var(--red-dark);
+    border-radius: 50px;
+    padding: 3px 12px;
+    font-size: 0.78rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    margin-right: 6px;
+    margin-bottom: 6px;
+  }
+
+  .pill.gold { background: var(--gold-light); color: #7a5a00; }
+  .pill.green { background: #e8f5e8; color: var(--green); }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+
+  .btn-red { background: var(--red); color: white; }
+  .btn-gold { background: var(--gold); color: #2a1a00; }
+  .btn-outline { background: transparent; color: var(--red); border: 2px solid var(--red); }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x: auto; margin-bottom: 20px; }
+
+  table { width: 100%; border-collapse: collapse; min-width: 400px; }
+
+  th {
+    background: var(--red);
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 0.9rem;
+  }
+
+  td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--grey);
+    font-size: 0.9rem;
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: var(--grey-light); }
+
+  /* ── DOCS LIST ── */
+  .doc-list { list-style: none; padding: 0; }
+
+  .doc-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--grey);
+  }
+
+  .doc-list li:last-child { border-bottom: none; }
+
+  .doc-icon {
+    font-size: 1.6rem;
+    flex-shrink: 0;
+  }
+
+  .doc-info { flex: 1; }
+  .doc-info strong { display: block; font-size: 0.95rem; }
+  .doc-info span { font-size: 0.8rem; color: var(--text-muted); }
+
+  .doc-list a {
+    color: var(--red);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  /* ── EVENTS LIST ── */
+  .event-list { display: flex; flex-direction: column; gap: 14px; }
+
+  .event-item {
+    display: flex;
+    gap: 16px;
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1.5px solid var(--grey);
+    padding: 18px;
+    box-shadow: var(--shadow);
+  }
+
+  .event-date-block {
+    background: var(--red);
+    color: white;
+    border-radius: 10px;
+    padding: 10px 14px;
+    text-align: center;
+    min-width: 64px;
+    flex-shrink: 0;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .event-day { font-size: 1.6rem; font-weight: 900; line-height: 1; }
+  .event-month { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .event-info h4 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
+
+  .event-info p { font-size: 0.88rem; color: var(--text-muted); }
+
+  /* ── CONTACT GRID ── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .contact-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1.5px solid var(--grey);
+    padding: 20px;
+    box-shadow: var(--shadow);
+  }
+
+  .contact-role {
+    font-size: 0.75rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--red);
+    margin-bottom: 4px;
+  }
+
+  .contact-name {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+
+  .contact-email {
+    font-size: 0.82rem;
+    color: var(--red);
+    word-break: break-all;
+  }
+
+  /* ── EDIT GUIDE ── */
+  .edit-guide {
+    background: #fffbea;
+    border: 2px solid var(--gold);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-bottom: 24px;
+  }
+
+  .edit-guide h3 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    color: #7a5a00;
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .edit-guide code {
+    background: rgba(0,0,0,0.06);
+    border-radius: 5px;
+    padding: 2px 7px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.88em;
+    color: var(--red-dark);
+  }
+
+  .edit-guide p, .edit-guide li {
+    font-size: 0.9rem;
+    color: #5a4000;
+    margin-bottom: 8px;
+  }
+
+  .edit-guide ul { padding-left: 18px; }
+  .edit-guide li { margin-bottom: 6px; }
+
+  .step {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+
+  .step-num {
+    background: var(--gold);
+    color: #2a1a00;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 0.85rem;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .step-text { font-size: 0.9rem; color: #5a4000; }
+  .step-text strong { color: #3a2800; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--red-dark);
+    color: rgba(255,255,255,0.8);
+    text-align: center;
+    padding: 28px 20px;
+    font-size: 0.85rem;
+  }
+
+  footer a { color: var(--gold); text-decoration: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    nav { display: none; }
+    .nav-hamburger { display: block; }
+    .mobile-nav { display: flex; }
+    .header-title { font-size: 1.2rem; }
+    .header-logo img { height: 44px; }
+    .hero { padding: 40px 20px 36px; }
+    .hero img { height: 80px; }
+    .main { padding: 28px 16px 48px; }
+    .info-box { padding: 20px; }
+    .cards { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr 1fr; }
+    .event-item { flex-direction: column; gap: 10px; }
+    .event-date-block { display: flex; align-items: center; gap: 10px; width: fit-content; }
+    .event-day { font-size: 1.2rem; }
+  }
+
+  @media (max-width: 400px) {
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a class="header-logo" href="#" onclick="showPage('home')">
+      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyODAgMzIwIiB3aWR0aD0iMjgwIiBoZWlnaHQ9IjMyMCI+CiAgPCEtLSBTaGllbGQgb3V0bGluZSAtLT4KICA8cGF0aCBkPSJNMjAsMjAgTDI2MCwyMCBMMjYwLDIwMCBRMjYwLDI4MCAxNDAsMzEwIFEyMCwyODAgMjAsMjAwIFoiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNjYzFmMWYiIHN0cm9rZS13aWR0aD0iMTAiLz4KICAKICA8IS0tIFJlZCB0b3AgYmFyIG9mIHNoaWVsZCAtLT4KICA8cGF0aCBkPSJNMjAsMjAgTDI2MCwyMCBMMjYwLDgwIEwyMCw4MCBaIiBmaWxsPSIjY2MxZjFmIi8+CiAgCiAgPCEtLSBXaGl0ZSBtaWRkbGUgc2VjdGlvbiAtLT4KICA8cGF0aCBkPSJNMjAsODAgTDI2MCw4MCBMMjYwLDIwMCBRMjYwLDI3MCAxNDAsMzAwIFEyMCwyNzAgMjAsMjAwIFoiIGZpbGw9IndoaXRlIi8+CgogIDwhLS0gVHJlZSB0cnVua3MgKGJyb3duKSAtLT4KICA8IS0tIExlZnQgdHJlZSB0cnVuayAtLT4KICA8cmVjdCB4PSI1OCIgeT0iMTYwIiB3aWR0aD0iMTQiIGhlaWdodD0iNTAiIGZpbGw9IiM4QjQ1MTMiLz4KICA8IS0tIENlbnRlci1sZWZ0IHRyZWUgdHJ1bmsgLS0+CiAgPHJlY3QgeD0iMTAwIiB5PSIxNTUiIHdpZHRoPSIxNCIgaGVpZ2h0PSI1NSIgZmlsbD0iIzhCNDUxMyIvPgogIDwhLS0gQ2VudGVyIHRyZWUgdHJ1bmsgLS0+CiAgPHJlY3QgeD0iMTMzIiB5PSIxNDUiIHdpZHRoPSIxNiIgaGVpZ2h0PSI2NSIgZmlsbD0iIzhCNDUxMyIvPgogIDwhLS0gQ2VudGVyLXJpZ2h0IHRyZWUgdHJ1bmsgLS0+CiAgPHJlY3QgeD0iMTY2IiB5PSIxNTUiIHdpZHRoPSIxNCIgaGVpZ2h0PSI1NSIgZmlsbD0iIzhCNDUxMyIvPgogIDwhLS0gUmlnaHQgdHJlZSB0cnVuayAtLT4KICA8cmVjdCB4PSIyMDgiIHk9IjE2MCIgd2lkdGg9IjE0IiBoZWlnaHQ9IjUwIiBmaWxsPSIjOEI0NTEzIi8+CgogIDwhLS0gVHJlZSBjYW5vcGllcyAoZ3JlZW4pIC0gbGVmdCB0cmVlIC0tPgogIDxlbGxpcHNlIGN4PSI2NSIgY3k9IjE0MCIgcng9IjMyIiByeT0iMzgiIGZpbGw9IiMyZDhhMmQiLz4KICA8ZWxsaXBzZSBjeD0iNTAiIGN5PSIxNTUiIHJ4PSIyMCIgcnk9IjI1IiBmaWxsPSIjMmQ4YTJkIi8+CiAgPGVsbGlwc2UgY3g9IjgwIiBjeT0iMTU1IiByeD0iMjAiIHJ5PSIyNSIgZmlsbD0iIzJkOGEyZCIvPgogIDwhLS0gSGlnaGxpZ2h0IC0tPgogIDxlbGxpcHNlIGN4PSI1OCIgY3k9IjEyOCIgcng9IjE0IiByeT0iMTYiIGZpbGw9IiMzYWFhM2EiIG9wYWNpdHk9IjAuNiIvPgoKICA8IS0tIENlbnRlci1sZWZ0IHRyZWUgLS0+CiAgPGVsbGlwc2UgY3g9IjEwNyIgY3k9IjEyOCIgcng9IjMwIiByeT0iMzYiIGZpbGw9IiMyZDhhMmQiLz4KICA8ZWxsaXBzZSBjeD0iOTIiIGN5PSIxNDUiIHJ4PSIxOCIgcnk9IjIyIiBmaWxsPSIjMmQ4YTJkIi8+CiAgPGVsbGlwc2UgY3g9IjEyMiIgY3k9IjE0NSIgcng9IjE4IiByeT0iMjIiIGZpbGw9IiMyZDhhMmQiLz4KICA8ZWxsaXBzZSBjeD0iMTAwIiBjeT0iMTE2IiByeD0iMTMiIHJ5PSIxNSIgZmlsbD0iIzNhYWEzYSIgb3BhY2l0eT0iMC42Ii8+CgogIDwhLS0gQ2VudGVyIHRyZWUgKHRhbGxlc3QpIC0tPgogIDxlbGxpcHNlIGN4PSIxNDEiIGN5PSIxMTUiIHJ4PSIzNSIgcnk9IjQyIiBmaWxsPSIjMmQ4YTJkIi8+CiAgPGVsbGlwc2UgY3g9IjEyMiIgY3k9IjEzOCIgcng9IjIyIiByeT0iMjYiIGZpbGw9IiMyZDhhMmQiLz4KICA8ZWxsaXBzZSBjeD0iMTYwIiBjeT0iMTM4IiByeD0iMjIiIHJ5PSIyNiIgZmlsbD0iIzJkOGEyZCIvPgogIDxlbGxpcHNlIGN4PSIxMzMiIGN5PSIxMDAiIHJ4PSIxNSIgcnk9IjE4IiBmaWxsPSIjM2FhYTNhIiBvcGFjaXR5PSIwLjYiLz4KCiAgPCEtLSBDZW50ZXItcmlnaHQgdHJlZSAtLT4KICA8ZWxsaXBzZSBjeD0iMTczIiBjeT0iMTI4IiByeD0iMzAiIHJ5PSIzNiIgZmlsbD0iIzJkOGEyZCIvPgogIDxlbGxpcHNlIGN4PSIxNTgiIGN5PSIxNDUiIHJ4PSIxOCIgcnk9IjIyIiBmaWxsPSIjMmQ4YTJkIi8+CiAgPGVsbGlwc2UgY3g9IjE4OCIgY3k9IjE0NSIgcng9IjE4IiByeT0iMjIiIGZpbGw9IiMyZDhhMmQiLz4KICA8ZWxsaXBzZSBjeD0iMTY2IiBjeT0iMTE2IiByeD0iMTMiIHJ5PSIxNSIgZmlsbD0iIzNhYWEzYSIgb3BhY2l0eT0iMC42Ii8+CgogIDwhLS0gUmlnaHQgdHJlZSAtLT4KICA8ZWxsaXBzZSBjeD0iMjE1IiBjeT0iMTQwIiByeD0iMzIiIHJ5PSIzOCIgZmlsbD0iIzJkOGEyZCIvPgogIDxlbGxpcHNlIGN4PSIyMDAiIGN5PSIxNTUiIHJ4PSIyMCIgcnk9IjI1IiBmaWxsPSIjMmQ4YTJkIi8+CiAgPGVsbGlwc2UgY3g9IjIzMCIgY3k9IjE1NSIgcng9IjIwIiByeT0iMjUiIGZpbGw9IiMyZDhhMmQiLz4KICA8ZWxsaXBzZSBjeD0iMjA4IiBjeT0iMTI4IiByeD0iMTQiIHJ5PSIxNiIgZmlsbD0iIzNhYWEzYSIgb3BhY2l0eT0iMC42Ii8+CgogIDwhLS0gR29sZCByaW5nIC8gaGFsbyAtLT4KICA8ZWxsaXBzZSBjeD0iMTQxIiBjeT0iMjA1IiByeD0iNTAiIHJ5PSIxNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZDRhMDE3IiBzdHJva2Utd2lkdGg9IjEyIi8+CiAgPGVsbGlwc2UgY3g9IjE0MSIgY3k9IjIwNSIgcng9IjUwIiByeT0iMTYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2YwYzA0MCIgc3Ryb2tlLXdpZHRoPSI1Ii8+CgogIDwhLS0gU2hpZWxkIGJvcmRlciAtLT4KICA8cGF0aCBkPSJNMjAsMjAgTDI2MCwyMCBMMjYwLDIwMCBRMjYwLDI4MCAxNDAsMzEwIFEyMCwyODAgMjAsMjAwIFoiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2NjMWYxZiIgc3Ryb2tlLXdpZHRoPSIxMCIvPgoKICA8IS0tIFJlZCBiYW5uZXIgYmVsb3cgc2hpZWxkIC0tPgogIDxwYXRoIGQ9Ik01LDI3NSBRMTUsMjYwIDM1LDI2OCBMMjQ1LDI2OCBRMjY1LDI2MCAyNzUsMjc1IFEyNjUsMjk1IDI0NSwyODggTDM1LDI4OCBRMTUsMjk1IDUsMjc1IFoiIGZpbGw9IiNjYzFmMWYiLz4KICA8IS0tIEJhbm5lciBjdXJscyAtLT4KICA8cGF0aCBkPSJNNSwyNzUgUTAsMjY1IDEwLDI1OCBMMzUsMjY4IiBmaWxsPSIjYTAxMDEwIi8+CiAgPHBhdGggZD0iTTI3NSwyNzUgUTI4MCwyNjUgMjcwLDI1OCBMMjQ1LDI2OCIgZmlsbD0iI2EwMTAxMCIvPgogIDxwYXRoIGQ9Ik01LDI3NSBRMCwyODUgMTAsMjkyIEwzNSwyODgiIGZpbGw9IiNhMDEwMTAiLz4KICA8cGF0aCBkPSJNMjc1LDI3NSBRMjgwLDI4NSAyNzAsMjkyIEwyNDUsMjg4IiBmaWxsPSIjYTAxMDEwIi8+CiAgCiAgPCEtLSBCYW5uZXIgdGV4dCAtLT4KICA8dGV4dCB4PSIxNDAiIHk9IjI4NCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsIHNlcmlmIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2Q0YTAxNyIgbGV0dGVyLXNwYWNpbmc9IjEiPkFsZHJ5bmd0b248L3RleHQ+Cjwvc3ZnPgo=" alt="Aldryngton School Logo">
+      <div class="header-title">
+        Aldryngton PTA
+        <span>Parent Teacher Association</span>
+      </div>
+    </a>
+    <nav id="desktopNav">
+      <a href="#" onclick="showPage('home')" class="active" id="nav-home">Home</a>
+      <a href="#" onclick="showPage('about')" id="nav-about">About</a>
+      <a href="#" onclick="showPage('meetings')" id="nav-meetings">Meetings</a>
+      <a href="#" onclick="showPage('events')" id="nav-events">Events</a>
+      <a href="#" onclick="showPage('documents')" id="nav-documents">Documents</a>
+      <a href="#" onclick="showPage('uniform')" id="nav-uniform">Uniform</a>
+      <a href="#" onclick="showPage('contact')" id="nav-contact">Contact</a>
+    </nav>
+    <button class="nav-hamburger" onclick="openMobileNav()">☰</button>
+  </div>
+</header>
+
+<!-- MOBILE NAV OVERLAY -->
+<div class="nav-overlay" id="navOverlay" onclick="closeMobileNav()"></div>
+
+<!-- MOBILE NAV DRAWER -->
+<nav class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" onclick="closeMobileNav()">✕ Close</button>
+  <a href="#" onclick="showPage('home'); closeMobileNav()">🏠 Home</a>
+  <a href="#" onclick="showPage('about'); closeMobileNav()">ℹ️ About the PTA</a>
+  <a href="#" onclick="showPage('meetings'); closeMobileNav()">📅 Meetings & Minutes</a>
+  <a href="#" onclick="showPage('events'); closeMobileNav()">🎉 Events & Fundraisers</a>
+  <a href="#" onclick="showPage('documents'); closeMobileNav()">📄 Documents & Forms</a>
+  <a href="#" onclick="showPage('uniform'); closeMobileNav()">👕 Second-Hand Uniform</a>
+  <a href="#" onclick="showPage('contact'); closeMobileNav()">✉️ Contact Us</a>
+</nav>
+
+<!-- ═══════════════ HOME PAGE ═══════════════ -->
+<div class="page active" id="page-home">
+
+  <div class="hero">
+    <div class="hero-inner">
+      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyODAgMzIwIiB3aWR0aD0iMjgwIiBoZWlnaHQ9IjMyMCI+CiAgPCEtLSBTaGllbGQgb3V0bGluZSAtLT4KICA8cGF0aCBkPSJNMjAsMjAgTDI2MCwyMCBMMjYwLDIwMCBRMjYwLDI4MCAxNDAsMzEwIFEyMCwyODAgMjAsMjAwIFoiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNjYzFmMWYiIHN0cm9rZS13aWR0aD0iMTAiLz4KICAKICA8IS0tIFJlZCB0b3AgYmFyIG9mIHNoaWVsZCAtLT4KICA8cGF0aCBkPSJNMjAsMjAgTDI2MCwyMCBMMjYwLDgwIEwyMCw4MCBaIiBmaWxsPSIjY2MxZjFmIi8+CiAgCiAgPCEtLSBXaGl0ZSBtaWRkbGUgc2VjdGlvbiAtLT4KICA8cGF0aCBkPSJNMjAsODAgTDI2MCw4MCBMMjYwLDIwMCBRMjYwLDI3MCAxNDAsMzAwIFEyMCwyNzAgMjAsMjAwIFoiIGZpbGw9IndoaXRlIi8+CgogIDwhLS0gVHJlZSB0cnVua3MgKGJyb3duKSAtLT4KICA8IS0tIExlZnQgdHJlZSB0cnVuayAtLT4KICA8cmVjdCB4PSI1OCIgeT0iMTYwIiB3aWR0aD0iMTQiIGhlaWdodD0iNTAiIGZpbGw9IiM4QjQ1MTMiLz4KICA8IS0tIENlbnRlci1sZWZ0IHRyZWUgdHJ1bmsgLS0+CiAgPHJlY3QgeD0iMTAwIiB5PSIxNTUiIHdpZHRoPSIxNCIgaGVpZ2h0PSI1NSIgZmlsbD0iIzhCNDUxMyIvPgogIDwhLS0gQ2VudGVyIHRyZWUgdHJ1bmsgLS0+CiAgPHJlY3QgeD0iMTMzIiB5PSIxNDUiIHdpZHRoPSIxNiIgaGVpZ2h0PSI2NSIgZmlsbD0iIzhCNDUxMyIvPgogIDwhLS0gQ2VudGVyLXJpZ2h0IHRyZWUgdHJ1bmsgLS0+CiAgPHJlY3QgeD0iMTY2IiB5PSIxNTUiIHdpZHRoPSIxNCIgaGVpZ2h0PSI1NSIgZmlsbD0iIzhCNDUxMyIvPgogIDwhLS0gUmlnaHQgdHJlZSB0cnVuayAtLT4KICA8cmVjdCB4PSIyMDgiIHk9IjE2MCIgd2lkdGg9IjE0IiBoZWlnaHQ9IjUwIiBmaWxsPSIjOEI0NTEzIi8+CgogIDwhLS0gVHJlZSBjYW5vcGllcyAoZ3JlZW4pIC0gbGVmdCB0cmVlIC0tPgogIDxlbGxpcHNlIGN4PSI2NSIgY3k9IjE0MCIgcng9IjMyIiByeT0iMzgiIGZpbGw9IiMyZDhhMmQiLz4KICA8ZWxsaXBzZSBjeD0iNTAiIGN5PSIxNTUiIHJ4PSIyMCIgcnk9IjI1IiBmaWxsPSIjMmQ4YTJkIi8+CiAgPGVsbGlwc2UgY3g9IjgwIiBjeT0iMTU1IiByeD0iMjAiIHJ5PSIyNSIgZmlsbD0iIzJkOGEyZCIvPgogIDwhLS0gSGlnaGxpZ2h0IC0tPgogIDxlbGxpcHNlIGN4PSI1OCIgY3k9IjEyOCIgcng9IjE0IiByeT0iMTYiIGZpbGw9IiMzYWFhM2EiIG9wYWNpdHk9IjAuNiIvPgoKICA8IS0tIENlbnRlci1sZWZ0IHRyZWUgLS0+CiAgPGVsbGlwc2UgY3g9IjEwNyIgY3k9IjEyOCIgcng9IjMwIiByeT0iMzYiIGZpbGw9IiMyZDhhMmQiLz4KICA8ZWxsaXBzZSBjeD0iOTIiIGN5PSIxNDUiIHJ4PSIxOCIgcnk9IjIyIiBmaWxsPSIjMmQ4YTJkIi8+CiAgPGVsbGlwc2UgY3g9IjEyMiIgY3k9IjE0NSIgcng9IjE4IiByeT0iMjIiIGZpbGw9IiMyZDhhMmQiLz4KICA8ZWxsaXBzZSBjeD0iMTAwIiBjeT0iMTE2IiByeD0iMTMiIHJ5PSIxNSIgZmlsbD0iIzNhYWEzYSIgb3BhY2l0eT0iMC42Ii8+CgogIDwhLS0gQ2VudGVyIHRyZWUgKHRhbGxlc3QpIC0tPgogIDxlbGxpcHNlIGN4PSIxNDEiIGN5PSIxMTUiIHJ4PSIzNSIgcnk9IjQyIiBmaWxsPSIjMmQ4YTJkIi8+CiAgPGVsbGlwc2UgY3g9IjEyMiIgY3k9IjEzOCIgcng9IjIyIiByeT0iMjYiIGZpbGw9IiMyZDhhMmQiLz4KICA8ZWxsaXBzZSBjeD0iMTYwIiBjeT0iMTM4IiByeD0iMjIiIHJ5PSIyNiIgZmlsbD0iIzJkOGEyZCIvPgogIDxlbGxpcHNlIGN4PSIxMzMiIGN5PSIxMDAiIHJ4PSIxNSIgcnk9IjE4IiBmaWxsPSIjM2FhYTNhIiBvcGFjaXR5PSIwLjYiLz4KCiAgPCEtLSBDZW50ZXItcmlnaHQgdHJlZSAtLT4KICA8ZWxsaXBzZSBjeD0iMTczIiBjeT0iMTI4IiByeD0iMzAiIHJ5PSIzNiIgZmlsbD0iIzJkOGEyZCIvPgogIDxlbGxpcHNlIGN4PSIxNTgiIGN5PSIxNDUiIHJ4PSIxOCIgcnk9IjIyIiBmaWxsPSIjMmQ4YTJkIi8+CiAgPGVsbGlwc2UgY3g9IjE4OCIgY3k9IjE0NSIgcng9IjE4IiByeT0iMjIiIGZpbGw9IiMyZDhhMmQiLz4KICA8ZWxsaXBzZSBjeD0iMTY2IiBjeT0iMTE2IiByeD0iMTMiIHJ5PSIxNSIgZmlsbD0iIzNhYWEzYSIgb3BhY2l0eT0iMC42Ii8+CgogIDwhLS0gUmlnaHQgdHJlZSAtLT4KICA8ZWxsaXBzZSBjeD0iMjE1IiBjeT0iMTQwIiByeD0iMzIiIHJ5PSIzOCIgZmlsbD0iIzJkOGEyZCIvPgogIDxlbGxpcHNlIGN4PSIyMDAiIGN5PSIxNTUiIHJ4PSIyMCIgcnk9IjI1IiBmaWxsPSIjMmQ4YTJkIi8+CiAgPGVsbGlwc2UgY3g9IjIzMCIgY3k9IjE1NSIgcng9IjIwIiByeT0iMjUiIGZpbGw9IiMyZDhhMmQiLz4KICA8ZWxsaXBzZSBjeD0iMjA4IiBjeT0iMTI4IiByeD0iMTQiIHJ5PSIxNiIgZmlsbD0iIzNhYWEzYSIgb3BhY2l0eT0iMC42Ii8+CgogIDwhLS0gR29sZCByaW5nIC8gaGFsbyAtLT4KICA8ZWxsaXBzZSBjeD0iMTQxIiBjeT0iMjA1IiByeD0iNTAiIHJ5PSIxNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZDRhMDE3IiBzdHJva2Utd2lkdGg9IjEyIi8+CiAgPGVsbGlwc2UgY3g9IjE0MSIgY3k9IjIwNSIgcng9IjUwIiByeT0iMTYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2YwYzA0MCIgc3Ryb2tlLXdpZHRoPSI1Ii8+CgogIDwhLS0gU2hpZWxkIGJvcmRlciAtLT4KICA8cGF0aCBkPSJNMjAsMjAgTDI2MCwyMCBMMjYwLDIwMCBRMjYwLDI4MCAxNDAsMzEwIFEyMCwyODAgMjAsMjAwIFoiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2NjMWYxZiIgc3Ryb2tlLXdpZHRoPSIxMCIvPgoKICA8IS0tIFJlZCBiYW5uZXIgYmVsb3cgc2hpZWxkIC0tPgogIDxwYXRoIGQ9Ik01LDI3NSBRMTUsMjYwIDM1LDI2OCBMMjQ1LDI2OCBRMjY1LDI2MCAyNzUsMjc1IFEyNjUsMjk1IDI0NSwyODggTDM1LDI4OCBRMTUsMjk1IDUsMjc1IFoiIGZpbGw9IiNjYzFmMWYiLz4KICA8IS0tIEJhbm5lciBjdXJscyAtLT4KICA8cGF0aCBkPSJNNSwyNzUgUTAsMjY1IDEwLDI1OCBMMzUsMjY4IiBmaWxsPSIjYTAxMDEwIi8+CiAgPHBhdGggZD0iTTI3NSwyNzUgUTI4MCwyNjUgMjcwLDI1OCBMMjQ1LDI2OCIgZmlsbD0iI2EwMTAxMCIvPgogIDxwYXRoIGQ9Ik01LDI3NSBRMCwyODUgMTAsMjkyIEwzNSwyODgiIGZpbGw9IiNhMDEwMTAiLz4KICA8cGF0aCBkPSJNMjc1LDI3NSBRMjgwLDI4NSAyNzAsMjkyIEwyNDUsMjg4IiBmaWxsPSIjYTAxMDEwIi8+CiAgCiAgPCEtLSBCYW5uZXIgdGV4dCAtLT4KICA8dGV4dCB4PSIxNDAiIHk9IjI4NCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsIHNlcmlmIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2Q0YTAxNyIgbGV0dGVyLXNwYWNpbmc9IjEiPkFsZHJ5bmd0b248L3RleHQ+Cjwvc3ZnPgo=" alt="Aldryngton School">
+      <h1>Welcome to the Aldryngton PTA</h1>
+      <p>Raising funds and bringing families together to support our wonderful school community.</p>
+      <div class="hero-badges">
+        <span class="hero-badge">🤝 Parent-run charity</span>
+        <span class="hero-badge">🏫 Aldryngton Primary</span>
+        <span class="hero-badge">❤️ All parents welcome</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEXT MEETING BANNER -->
+  <div class="next-meeting">
+    📅 Next Meeting: <strong>Wednesday 11th June 2026</strong> &nbsp;|&nbsp;
+    Next AGM: <strong>Wednesday 17th September 2025, 7pm</strong> &nbsp;|&nbsp;
+    <a href="#" onclick="showPage('meetings')">View all meeting info →</a>
+  </div>
+
+  <div class="main">
+    <h2 class="section-title">What You'll Find Here</h2>
+    <p class="section-subtitle">Everything you need to know about the PTA — quick links below.</p>
+
+    <div class="cards">
+      <div class="card" onclick="showPage('about')">
+        <span class="card-icon">📋</span>
+        <h3>About the PTA</h3>
+        <p>Find out who we are, what we do, and how your involvement makes a real difference.</p>
+        <span class="card-link">Learn more →</span>
+      </div>
+      <div class="card" onclick="showPage('meetings')">
+        <span class="card-icon">🗓️</span>
+        <h3>Meetings & Minutes</h3>
+        <p>Meeting dates, past minutes, financial reports and AGM information.</p>
+        <span class="card-link">View meetings →</span>
+      </div>
+      <div class="card" onclick="showPage('events')">
+        <span class="card-icon">🎉</span>
+        <h3>Events & Fundraisers</h3>
+        <p>School discos, summer fayre, pool club, Christmas events and much more.</p>
+        <span class="card-link">See events →</span>
+      </div>
+      <div class="card" onclick="showPage('documents')">
+        <span class="card-icon">📄</span>
+        <h3>Documents & Forms</h3>
+        <p>Constitution, privacy policy, templates and other useful documents to download.</p>
+        <span class="card-link">View documents →</span>
+      </div>
+      <div class="card" onclick="showPage('uniform')">
+        <span class="card-icon">👕</span>
+        <h3>Second-Hand Uniform</h3>
+        <p>Buy and sell good-quality pre-loved uniform. Great for families, great for the planet.</p>
+        <span class="card-link">Find out more →</span>
+      </div>
+      <div class="card" onclick="showPage('contact')">
+        <span class="card-icon">✉️</span>
+        <h3>Contact Us</h3>
+        <p>Get in touch with PTA officers or find the right email for a specific event team.</p>
+        <span class="card-link">Contact →</span>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h2>🙌 We Really Need Your Support!</h2>
+      <p>As a parent of a child at Aldryngton Primary School, <strong>you are automatically a member of the PTA</strong>. You can attend meetings, vote on proposals and suggest ideas for spending or raising funds.</p>
+      <p style="margin-top:8px;">Even if you can't commit to a regular role, any support you can give — attending events, volunteering for an afternoon, or simply spreading the word — makes a huge difference to our school community.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ ABOUT PAGE ═══════════════ -->
+<div class="page" id="page-about">
+  <div class="main">
+    <h2 class="section-title">About the PTA</h2>
+    <p class="section-subtitle">Who we are, what we do, and how you can get involved.</p>
+
+    <div class="info-box">
+      <h2>What is the PTA?</h2>
+      <p>Aldryngton PTA is a charity run by parent and guardian volunteers. We raise money to improve equipment and resources to enhance our children's education and the facilities in the school in general.</p>
+      <p style="margin-top:8px;">We promote closer links between home and school and bring staff, parents, pupils and friends together in support of our school.</p>
+    </div>
+
+    <div class="info-box">
+      <h2>💡 How Can You Get Involved?</h2>
+      <ul>
+        <li>Offer help before, after or at events — even occasional help is hugely valuable.</li>
+        <li>Attend the AGM or meetings to share ideas for fundraising events.</li>
+        <li>Support and attend the events we organise — your enthusiasm matters!</li>
+        <li>Volunteer to be a PTA Class Rep or Committee member.</li>
+        <li>Share your contacts or skills — come to a meeting to discuss how you could help.</li>
+        <li>Suggest ideas for how funds could be spent.</li>
+        <li>Make a donation — cash, cheque or online. Contact the Treasurer for details.</li>
+      </ul>
+    </div>
+
+    <div class="info-box">
+      <h2>💸 Match Funding</h2>
+      <p>Many employers offer <strong>match funding</strong> schemes where they will match or contribute to donations their employees make to charities. If your employer offers this scheme, please consider directing it to the Aldryngton PTA — it can double the value of your contribution at no extra cost to you!</p>
+      <p style="margin-top:8px;">Contact us at <a href="mailto:ptaofficers@aldryngtonpta.com" style="color:var(--red)">ptaofficers@aldryngtonpta.com</a> for more information.</p>
+    </div>
+
+    <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:8px;">
+      <a href="https://aldryngtonpta.com/wp-content/uploads/2021/09/PTA-About-the-PTA-Sep2021.pdf" target="_blank" class="btn btn-red">📥 Download PTA Presentation</a>
+      <a href="#" onclick="showPage('contact')" class="btn btn-outline">✉️ Get in Touch</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ MEETINGS PAGE ═══════════════ -->
+<div class="page" id="page-meetings">
+  <div class="main">
+    <h2 class="section-title">Meetings & Minutes</h2>
+    <p class="section-subtitle">Upcoming dates, past minutes and financial reports.</p>
+
+    <div class="info-box" style="border-color:var(--gold); background:var(--gold-light)">
+      <h2 style="color:#7a5a00">📅 Upcoming Dates</h2>
+      <p><strong>Next Meeting:</strong> Wednesday 11th June 2026</p>
+      <p style="margin-top:6px"><strong>Next AGM:</strong> Wednesday 17th September 2025, 7pm</p>
+      <p style="margin-top:12px; font-size:0.88rem; color:#7a5a00">All parents and guardians are welcome to attend. Meetings are a great opportunity to share ideas and see how funds are being used.</p>
+    </div>
+
+    <div class="info-box">
+      <h2>📝 Meeting Minutes</h2>
+      <p style="margin-bottom:16px">Minutes from recent meetings are listed below. Click to download.</p>
+      <!-- ✏️ EDIT: Add new meeting minutes by copying one <li> block and updating the details -->
+      <ul class="doc-list">
+        <li>
+          <span class="doc-icon">📄</span>
+          <div class="doc-info">
+            <strong>Minutes – May 2026</strong>
+            <span>PTA Meeting · May 2026</span>
+          </div>
+          <a href="#">Download</a>
+        </li>
+        <li>
+          <span class="doc-icon">📄</span>
+          <div class="doc-info">
+            <strong>Minutes – March 2026</strong>
+            <span>PTA Meeting · March 2026</span>
+          </div>
+          <a href="#">Download</a>
+        </li>
+        <li>
+          <span class="doc-icon">📄</span>
+          <div class="doc-info">
+            <strong>Minutes – January 2026</strong>
+            <span>PTA Meeting · January 2026</span>
+          </div>
+          <a href="#">Download</a>
+        </li>
+        <li>
+          <span class="doc-icon">📄</span>
+          <div class="doc-info">
+            <strong>AGM Minutes – September 2025</strong>
+            <span>Annual General Meeting</span>
+          </div>
+          <a href="#">Download</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="info-box">
+      <h2>💰 Financial Reports</h2>
+      <p style="margin-bottom:16px">Treasurer's reports and financial summaries from meetings.</p>
+      <!-- ✏️ EDIT: Add new financial reports here -->
+      <ul class="doc-list">
+        <li>
+          <span class="doc-icon">📊</span>
+          <div class="doc-info">
+            <strong>Treasurer's Report – Spring 2026</strong>
+            <span>Financial update · Spring term</span>
+          </div>
+          <a href="#">Download</a>
+        </li>
+        <li>
+          <span class="doc-icon">📊</span>
+          <div class="doc-info">
+            <strong>Annual Accounts – 2024/25</strong>
+            <span>Full year accounts</span>
+          </div>
+          <a href="#">Download</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ EVENTS PAGE ═══════════════ -->
+<div class="page" id="page-events">
+  <div class="main">
+    <h2 class="section-title">Events & Fundraisers</h2>
+    <p class="section-subtitle">What's coming up and the full range of events we run each year.</p>
+
+    <div class="info-box" style="margin-bottom:28px">
+      <h2>📆 Coming Up</h2>
+      <!-- ✏️ EDIT: Update dates and event names here each term -->
+      <div class="event-list" style="margin-top:12px">
+        <div class="event-item">
+          <div class="event-date-block">
+            <div class="event-day">11</div>
+            <div class="event-month">Jun</div>
+          </div>
+          <div class="event-info">
+            <h4>PTA Meeting</h4>
+            <p>All parents welcome. Come and have your say on how we raise and spend funds.</p>
+          </div>
+        </div>
+        <div class="event-item">
+          <div class="event-date-block">
+            <div class="event-day">TBC</div>
+            <div class="event-month">Jul</div>
+          </div>
+          <div class="event-info">
+            <h4>Summer Fayre</h4>
+            <p>Stalls, games, music, food, picnic and a summer concert on the school grounds.</p>
+          </div>
+        </div>
+        <div class="event-item">
+          <div class="event-date-block">
+            <div class="event-day">17</div>
+            <div class="event-month">Sep</div>
+          </div>
+          <div class="event-info">
+            <h4>AGM – 7pm</h4>
+            <p>Annual General Meeting open to all PTA members. Elect officers, review the year.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title" style="font-size:1.3rem; margin-bottom:16px">All Events We Run</h2>
+
+    <div class="cards">
+      <div class="card">
+        <span class="card-icon">🍰</span>
+        <h3>Bake Sales</h3>
+        <p>Every class holds a sale of home-made and shop-bought cakes to raise money. A perennial favourite!</p>
+        <span class="pill">Each class</span>
+      </div>
+      <div class="card">
+        <span class="card-icon">🎄</span>
+        <h3>Christmas Fayre</h3>
+        <p>Gift stalls, craft activities, tombola, Santa's Grotto, face painting, games, food, licensed bar, raffles and Grand Draw.</p>
+        <span class="pill gold">December</span>
+      </div>
+      <div class="card">
+        <span class="card-icon">🕺</span>
+        <h3>School Discos</h3>
+        <p>Held once a term. Includes a Family Lounge for parents with refreshments while children dance!</p>
+        <span class="pill">Each term</span>
+      </div>
+      <div class="card">
+        <span class="card-icon">🐣</span>
+        <h3>Easter Egg Hunt</h3>
+        <p>Children search for a plastic egg with their classmates — winners earn a chocolate Easter egg.</p>
+        <span class="pill gold">Easter</span>
+      </div>
+      <div class="card">
+        <span class="card-icon">🌊</span>
+        <h3>Pool Club</h3>
+        <p>During summer, families can join the pool club to enjoy the school's heated outdoor swimming pool.</p>
+        <span class="pill green">Summer</span>
+      </div>
+      <div class="card">
+        <span class="card-icon">🏊</span>
+        <h3>Try a Tri</h3>
+        <p>Pupils team up with two friends and take part in a mini-triathlon every summer term.</p>
+        <span class="pill green">Summer</span>
+      </div>
+      <div class="card">
+        <span class="card-icon">🎅</span>
+        <h3>Santa Run</h3>
+        <p>A sponsored run with a Santa hat for each child. Fun, festive and great fundraising!</p>
+        <span class="pill gold">December</span>
+      </div>
+      <div class="card">
+        <span class="card-icon">☀️</span>
+        <h3>Summer Fayre</h3>
+        <p>Summer-themed stalls, activities, games, food, music, a picnic and a school concert.</p>
+        <span class="pill green">July</span>
+      </div>
+      <div class="card">
+        <span class="card-icon">🧊</span>
+        <h3>Ice Lolly Sales</h3>
+        <p>During the summer term, ice lolly sales are held after school. Quick, easy, popular!</p>
+        <span class="pill green">Summer term</span>
+      </div>
+      <div class="card">
+        <span class="card-icon">🎁</span>
+        <h3>Wrap a Present (WAP)</h3>
+        <p>Children buy, wrap and tag Christmas presents for family and friends at lunchtime.</p>
+        <span class="pill gold">Christmas</span>
+      </div>
+      <div class="card">
+        <span class="card-icon">🧦</span>
+        <h3>Textile Collection</h3>
+        <p>Parents fill bags with unwanted clothing and textiles. Collected by Bag2School who pay per kg.</p>
+        <span class="pill">Ongoing</span>
+      </div>
+      <div class="card">
+        <span class="card-icon">🪙</span>
+        <h3>Cash4Coins</h3>
+        <p>Collecting all foreign currency — old and new — including old British coins and notes.</p>
+        <span class="pill">Ongoing</span>
+      </div>
+      <div class="card">
+        <span class="card-icon">🎨</span>
+        <h3>Make Your Own Card</h3>
+        <p>Children design a Christmas card which can be printed and purchased by parents to raise PTA funds.</p>
+        <span class="pill gold">Sept / Oct</span>
+      </div>
+      <div class="card">
+        <span class="card-icon">🧆</span>
+        <h3>Eid Fayre</h3>
+        <p>Stalls and activities celebrating Eid, held on the school grounds. A wonderful community event.</p>
+        <span class="pill">Annual</span>
+      </div>
+      <div class="card">
+        <span class="card-icon">☕</span>
+        <h3>Coffee Mornings</h3>
+        <p>A warm welcome event for all new Reception parents joining Aldryngton for the first time.</p>
+        <span class="pill">September</span>
+      </div>
+      <div class="card">
+        <span class="card-icon">🎲</span>
+        <h3>Quiz & Bingo Nights</h3>
+        <p>Popular family-oriented evenings with cash prizes. Tickets sell fast — watch for announcements!</p>
+        <span class="pill">Termly</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ DOCUMENTS PAGE ═══════════════ -->
+<div class="page" id="page-documents">
+  <div class="main">
+    <h2 class="section-title">Documents & Forms</h2>
+    <p class="section-subtitle">Key documents, policies and templates to download.</p>
+
+    <!-- EDITING GUIDE -->
+    <div class="edit-guide">
+      <h3>✏️ Guide for PTA Editors — Adding New Documents</h3>
+      <p>To add a new document to this page, find the relevant section below and copy one of the existing <code>&lt;li&gt;</code> items. Then update three things:</p>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>The document name</strong> — change the text inside <code>&lt;strong&gt;</code></div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>The description</strong> — change the text inside <code>&lt;span&gt;</code></div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>The link</strong> — change <code>href="#"</code> to the full URL of your uploaded PDF or document. You can upload the file to Google Drive and use the share link.</div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h2>📋 PTA Constitution & Policies</h2>
+      <ul class="doc-list">
+        <li>
+          <span class="doc-icon">📄</span>
+          <div class="doc-info">
+            <strong>PTA Constitution 2021</strong>
+            <span>Governing document of the Aldryngton PTA</span>
+          </div>
+          <a href="https://aldryngtonpta.com/wp-content/uploads/2022/01/Aldryngton-School-PTA-Constitution-2021.pdf" target="_blank">Download</a>
+        </li>
+        <li>
+          <span class="doc-icon">🔒</span>
+          <div class="doc-info">
+            <strong>Privacy Notice</strong>
+            <span>How we use Parent / Pupil information · Updated August 2020</span>
+          </div>
+          <a href="https://aldryngtonpta.com/wp-content/uploads/2021/06/PTA-Privacy-Notice.pdf" target="_blank">Download</a>
+        </li>
+        <li>
+          <span class="doc-icon">🔒</span>
+          <div class="doc-info">
+            <strong>Data Protection Policy</strong>
+            <span>Updated January 2022</span>
+          </div>
+          <a href="https://aldryngtonpta.com/wp-content/uploads/2022/01/PTA-Data-Protection-Policy.pdf" target="_blank">Download</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="info-box">
+      <h2>📊 Presentations & Guides</h2>
+      <ul class="doc-list">
+        <li>
+          <span class="doc-icon">📊</span>
+          <div class="doc-info">
+            <strong>About the PTA – Presentation</strong>
+            <span>Overview of what the PTA does and how to get involved · September 2021</span>
+          </div>
+          <a href="https://aldryngtonpta.com/wp-content/uploads/2021/09/PTA-About-the-PTA-Sep2021.pdf" target="_blank">Download</a>
+        </li>
+        <!-- ✏️ EDIT: Add more documents here by copying the <li> block above -->
+      </ul>
+    </div>
+
+    <div class="info-box">
+      <h2>📝 Templates & Forms</h2>
+      <p style="margin-bottom:14px">Useful templates for PTA volunteers and committee members.</p>
+      <ul class="doc-list">
+        <!-- ✏️ EDIT: Add template documents here -->
+        <li>
+          <span class="doc-icon">📝</span>
+          <div class="doc-info">
+            <strong>Event Planning Template</strong>
+            <span>Standard template for planning PTA events</span>
+          </div>
+          <a href="#">Download</a>
+        </li>
+        <li>
+          <span class="doc-icon">📝</span>
+          <div class="doc-info">
+            <strong>Expense Claim Form</strong>
+            <span>For volunteers claiming back costs</span>
+          </div>
+          <a href="#">Download</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ UNIFORM PAGE ═══════════════ -->
+<div class="page" id="page-uniform">
+  <div class="main">
+    <h2 class="section-title">Second-Hand Uniform</h2>
+    <p class="section-subtitle">Good-quality pre-loved uniform — great value for families, better for the environment.</p>
+
+    <div class="info-box">
+      <h2>👕 About the Uniform Sale</h2>
+      <p>The PTA runs a second-hand uniform scheme selling good-quality re-usable uniform donated by parents, or sourced from unclaimed lost property.</p>
+      <p style="margin-top:10px">It's a brilliant way to save money on school uniform while helping other families and reducing waste.</p>
+    </div>
+
+    <div class="cards" style="grid-template-columns: repeat(auto-fill, minmax(240px,1fr))">
+      <div class="card">
+        <span class="card-icon">📦</span>
+        <h3>Donating Uniform</h3>
+        <p>If your child has grown out of their uniform and it's still in good condition, please consider donating it to the PTA. Drop off at the school office.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🛍️</span>
+        <h3>Buying Uniform</h3>
+        <p>Sales are held periodically throughout the year. Watch PTA communications for dates and availability.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">📧</span>
+        <h3>Get in Touch</h3>
+        <p>For specific queries about the uniform sale, email our uniform team directly.</p>
+        <a href="mailto:uniform@aldryngtonpta.com" class="card-link">uniform@aldryngtonpta.com</a>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h2>🔗 Online Second-Hand Uniform</h2>
+      <p>We also list items via an online platform for easier browsing and purchasing. Contact the uniform team for the current link.</p>
+      <a href="mailto:uniform@aldryngtonpta.com" class="btn btn-red" style="margin-top:14px; display:inline-flex">✉️ Contact Uniform Team</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ CONTACT PAGE ═══════════════ -->
+<div class="page" id="page-contact">
+  <div class="main">
+    <h2 class="section-title">Contact Us</h2>
+    <p class="section-subtitle">Get in touch with the PTA officers or find the right team for your query.</p>
+
+    <div class="info-box" style="background:var(--red-light); border-color:var(--red)">
+      <h2>📬 General Enquiries</h2>
+      <p>For general queries, email all PTA Officers together: <a href="mailto:ptaofficers@aldryngtonpta.com" style="color:var(--red-dark); font-weight:700">ptaofficers@aldryngtonpta.com</a></p>
+      <p style="margin-top:8px">For Year Link queries: <a href="mailto:yearlinks@aldryngtonpta.com" style="color:var(--red-dark); font-weight:700">yearlinks@aldryngtonpta.com</a></p>
+    </div>
+
+    <h3 style="font-family:'Nunito',sans-serif; font-weight:800; font-size:1.1rem; margin:24px 0 12px; color:var(--text)">🏛️ PTA Officers</h3>
+    <!-- ✏️ EDIT: Update officer names and emails here each year -->
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-role">Chair</div>
+        <div class="contact-name">Freya O'Mara</div>
+        <div class="contact-email"><a href="mailto:chair@aldryngtonpta.com">chair@aldryngtonpta.com</a></div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-role">Vice Chair</div>
+        <div class="contact-name">Tina Shepherd</div>
+        <div class="contact-email"><a href="mailto:vicechair@aldryngtonpta.com">vicechair@aldryngtonpta.com</a></div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-role">Treasurer</div>
+        <div class="contact-name">Narsing Chennamaneni</div>
+        <div class="contact-email"><a href="mailto:treasurer@aldryngtonpta.com">treasurer@aldryngtonpta.com</a></div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-role">Secretary</div>
+        <div class="contact-name">Adam Luk</div>
+        <div class="contact-email"><a href="mailto:secretary@aldryngtonpta.com">secretary@aldryngtonpta.com</a></div>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Nunito',sans-serif; font-weight:800; font-size:1.1rem; margin:28px 0 12px; color:var(--text)">🎉 Event Teams</h3>
+    <div class="table-wrap">
+      <!-- ✏️ EDIT: Add or update event team contacts in the table below -->
+      <table>
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th>Description</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Bake Sales</strong></td><td>Home-made and shop-bought cake sales per class</td><td><a href="mailto:cakesales@aldryngtonpta.com">cakesales@aldryngtonpta.com</a></td></tr>
+          <tr><td><strong>Coffee Mornings</strong></td><td>Welcome events for new Reception parents</td><td><a href="mailto:coffeemornings@aldryngtonpta.com">coffeemornings@aldryngtonpta.com</a></td></tr>
+          <tr><td><strong>Discos</strong></td><td>School discos held once a term</td><td><a href="mailto:disco@aldryngtonpta.com">disco@aldryngtonpta.com</a></td></tr>
+          <tr><td><strong>Easter Egg Hunt</strong></td><td>Children search for a plastic egg to win a chocolate prize</td><td><a href="mailto:egghunt@aldryngtonpta.com">egghunt@aldryngtonpta.com</a></td></tr>
+          <tr><td><strong>Eid Fayre</strong></td><td>Stalls and activities celebrating Eid</td><td><a href="mailto:eidfayre@aldryngtonpta.com">eidfayre@aldryngtonpta.com</a></td></tr>
+          <tr><td><strong>Pool Club</strong></td><td>Access to the school's heated outdoor pool in summer</td><td><a href="mailto:pool@aldryngtonpta.com">pool@aldryngtonpta.com</a></td></tr>
+          <tr><td><strong>Quiz & Bingo Nights</strong></td><td>Family quiz and bingo nights with cash prizes</td><td><a href="mailto:quiz@aldryngtonpta.com">quiz@aldryngtonpta.com</a></td></tr>
+          <tr><td><strong>Santa Run</strong></td><td>Sponsored run with a Santa hat for each child</td><td><a href="mailto:santarun@aldryngtonpta.com">santarun@aldryngtonpta.com</a></td></tr>
+          <tr><td><strong>Second-Hand Uniform</strong></td><td>Sale of good-quality re-usable pre-loved uniform</td><td><a href="mailto:uniform@aldryngtonpta.com">uniform@aldryngtonpta.com</a></td></tr>
+          <tr><td><strong>Try a Tri</strong></td><td>Mini-triathlon for pupils held every summer</td><td><a href="mailto:tryatri@aldryngtonpta.com">tryatri@aldryngtonpta.com</a></td></tr>
+          <tr><td><strong>Wrap a Present (WAP)</strong></td><td>Children buy and wrap Christmas presents at lunchtime</td><td><a href="mailto:wap@aldryngtonpta.com">wap@aldryngtonpta.com</a></td></tr>
+          <tr><td><strong>Year Links</strong></td><td>Share PTA information within year groups</td><td><a href="mailto:yearlinks@aldryngtonpta.com">yearlinks@aldryngtonpta.com</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Aldryngton PTA · Registered Charity · Aldryngton Primary School, Reading</p>
+  <p style="margin-top:6px"><a href="mailto:ptaofficers@aldryngtonpta.com">ptaofficers@aldryngtonpta.com</a></p>
+</footer>
+
+<script>
+  // ── Page routing ──
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('#desktopNav a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    const navEl = document.getElementById('nav-' + id);
+    if (navEl) navEl.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return false;
+  }
+
+  // ── Mobile nav ──
+  function openMobileNav() {
+    document.getElementById('mobileNav').classList.add('open');
+    document.getElementById('navOverlay').classList.add('open');
+  }
+  function closeMobileNav() {
+    document.getElementById('mobileNav').classList.remove('open');
+    document.getElementById('navOverlay').classList.remove('open');
+  }
+</script>
+</body>
+</html>
